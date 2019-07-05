@@ -16,6 +16,8 @@
 
 GLuaFunction *addNumbers;
 GLuaFunction *factorial;
+GLuaFunction *dot;
+
 GLuaPlugin *plugin;
 
 int f_addNumbers(lua_State* state) {
@@ -53,6 +55,21 @@ int f_factorial(lua_State* state) {
 	ReturnNumber(fact);
 }
 
+int f_dot(lua_State* state) {
+	std::vector<GLuaObject> params = dot->GetParams(state);
+
+	Vector a = params[0].vector_value;
+	Vector b = params[1].vector_value;
+
+	double sum = 0;
+
+	sum += a.x * b.x;
+	sum += a.y * b.y;
+	sum += a.z * b.z;
+
+	ReturnNumber(sum);
+}
+
 GMOD_MODULE_OPEN() {
 	// Create plugin "plugin name", "plugin version", "local function table name"
 	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA);
@@ -60,10 +77,12 @@ GMOD_MODULE_OPEN() {
 	// Add function, defining the parameter types we expect, and passing a function pointer
 	addNumbers = new GLuaFunction("addNumbers", std::vector<char> {GLua::NUMBER, GLua::NUMBER}, f_addNumbers);
 	factorial = new GLuaFunction("factorial", std::vector<char> {GLua::NUMBER}, f_factorial);
+	dot = new GLuaFunction("dot", std::vector<char> {GLua::VECTOR, GLua::VECTOR}, f_dot);
 
 	// Register function
 	plugin->Register(*addNumbers);
 	plugin->Register(*factorial);
+	plugin->Register(*dot);
 	
 	// Start plugin, perform setup
 	plugin->Start();

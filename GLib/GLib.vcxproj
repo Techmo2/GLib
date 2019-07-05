@@ -147,6 +147,9 @@
     <ClInclude Include="GLuaPlugin.h" />
     <ClInclude Include="GLuaUtil.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\test.lua" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
