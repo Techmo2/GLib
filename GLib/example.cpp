@@ -65,10 +65,10 @@ int f_factorial(lua_State* state) {
 int f_dot(lua_State* state) {
 	std::vector<GLuaObject> params = dot->GetParams(state);
 
-	Vector a = params[0].vector_value;
-	Vector b = params[1].vector_value;
+	static Vector a = params[0].vector_value;
+	static Vector b = params[1].vector_value;
 
-	double sum = 0;
+	static double sum = 0;
 
 	sum += a.x * b.x;
 	sum += a.y * b.y;
