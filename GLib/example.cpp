@@ -71,7 +71,9 @@ int f_dot(lua_State* state) {
 }
 
 GMOD_MODULE_OPEN() {
-	// Create plugin "plugin name", "plugin version", "local function table name"
+	// Create plugin "plugin name", "plugin version", "plugin table name"
+	// If functions are not registered using RegisterGlobal(), they will be stored in the plugin table.
+	// This helps to avoid conflicting function names, and keeps things tidy.
 	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA);
 
 	// Add function, defining the parameter types we expect, and passing a function pointer
