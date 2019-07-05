@@ -14,12 +14,17 @@
 
 #define GMOD_MODULE
 
+/* GLib function objects */
 GLuaFunction *addNumbers;
 GLuaFunction *factorial;
 GLuaFunction *dot;
 
+// The GLib plugin object
 GLuaPlugin *plugin;
 
+/* Some functions that we will register later */
+
+// Simple function that adds two numbers
 int f_addNumbers(lua_State* state) {
 
 	// Retrieve function parameters
@@ -36,6 +41,7 @@ int f_addNumbers(lua_State* state) {
 	ReturnNumber(sum);
 }
 
+// Simple function that calculates a factorial
 int f_factorial(lua_State* state) {
 
 	// Retrieve function parameters
@@ -55,6 +61,7 @@ int f_factorial(lua_State* state) {
 	ReturnNumber(fact);
 }
 
+// More complex function that calculates the dot product of two vectors
 int f_dot(lua_State* state) {
 	std::vector<GLuaObject> params = dot->GetParams(state);
 
@@ -70,7 +77,10 @@ int f_dot(lua_State* state) {
 	ReturnNumber(sum);
 }
 
+/* -------- */
+
 GMOD_MODULE_OPEN() {
+
 	// Create plugin "plugin name", "plugin version", "plugin table name"
 	// If functions are not registered using RegisterGlobal(), they will be stored in the plugin table.
 	// This helps to avoid conflicting function names, and keeps things tidy.
@@ -81,12 +91,12 @@ GMOD_MODULE_OPEN() {
 	factorial = new GLuaFunction("factorial", std::vector<char> {GLua::NUMBER}, f_factorial);
 	dot = new GLuaFunction("dot", std::vector<char> {GLua::VECTOR, GLua::VECTOR}, f_dot);
 
-	// Register function
+	// Cache functions with the plugin to be registered on startup.
 	plugin->Register(*addNumbers);
 	plugin->Register(*factorial);
 	plugin->Register(*dot);
 	
-	// Start plugin, perform setup
+	// Start plugin and perform setup
 	plugin->Start();
 
 	return 0;
