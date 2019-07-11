@@ -12,12 +12,11 @@
 #include "GLuaUtil.h"
 
 
-#define GMOD_MODULE
-
 /* GLib function objects */
 GLuaFunction *addNumbers;
 GLuaFunction *factorial;
 GLuaFunction *dot;
+GLuaFunction *throwError;
 
 // The GLib plugin object
 GLuaPlugin *plugin;
@@ -28,7 +27,7 @@ GLuaPlugin *plugin;
 int f_addNumbers(lua_State* state) {
 
 	// Retrieve function parameters
-	std::vector<GarrysMod::Lua::ILuaObject*> params = addNumbers->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = addNumbers->GetParams();
 
 	// Get parameter values
 	double a = params[0]->GetFloat();
@@ -45,7 +44,7 @@ int f_addNumbers(lua_State* state) {
 int f_factorial(lua_State* state) {
 
 	// Retrieve function parameters
-	std::vector<GarrysMod::Lua::ILuaObject*> params = factorial->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = factorial->GetParams();
 
 	// Get factorial base
 	int n = (int) params[0]->GetFloat();
@@ -63,7 +62,7 @@ int f_factorial(lua_State* state) {
 
 // More complex function that calculates the dot product of two vectors
 int f_dot(lua_State* state) {
-	std::vector<GarrysMod::Lua::ILuaObject*> params = dot->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = dot->GetParams();
 
 	// Get Vector is currently not functional, instead we cast the pointer to the data given by GetUserData
 	static Vector* a = reinterpret_cast<Vector*> (params[0]->GetUserData());
@@ -78,6 +77,23 @@ int f_dot(lua_State* state) {
 	ReturnNumber(sum);
 }
 
+// A simple function that throws a soft or hard error depending on the passed values.
+int f_throwError(lua_State* state) {
+	std::vector<GarrysMod::Lua::ILuaObject*> params = throwError->GetParams();
+
+	bool ThrowHard = params[0]->GetInt();
+	const char* msg = params[1]->GetString();
+
+	if (ThrowHard) {
+		plugin->ThrowErrorHard(msg);
+	}
+	else {
+		plugin->ThrowErrorSoft(msg);
+	}
+
+	return 0; // Return no values
+}
+
 /* -------- */
 
 GMOD_MODULE_OPEN() {
@@ -87,18 +103,22 @@ GMOD_MODULE_OPEN() {
 	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA->GetState());
 
 	// Add function, defining the parameter types we expect, and passing a function pointer
-	addNumbers = new GLuaFunction("addNumbers", f_addNumbers);
+	addNumbers = new GLuaFunction("addNumbers", f_addNumbers, LUA->GetState());
+	factorial = new GLuaFunction("factorial", f_factorial, LUA->GetState());
+	throwError = new GLuaFunction("throwError", f_throwError, LUA->GetState());
+	dot = new GLuaFunction("dot", f_dot, LUA->GetState());
 
-	factorial = new GLuaFunction("factorial", f_factorial);
-
-	dot = new GLuaFunction("dot", f_dot);
-	// Optional, check parameter types automatically
+	// Optional, check parameter types automatically.
+	// Has a minor effect on execution time, about equivalent to the increase in execution time added by checking the types manually.
+	// Still pretty damn fast.
 	dot->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::VECTOR, GarrysMod::Lua::Type::VECTOR});
+	//throwError->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::BOOL, GarrysMod::Lua::Type::STRING});
 
 	// Cache functions with the plugin to be registered on startup.
 	plugin->Register(*addNumbers);
 	plugin->Register(*factorial);
 	plugin->Register(*dot);
+	plugin->Register(*throwError);
 	
 	// Start plugin and perform setup
 	plugin->Start();

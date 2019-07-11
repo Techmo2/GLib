@@ -29,6 +29,9 @@ local dot = EPlugin.dot(a, b)
 
 print("dot(Vector(120, 0, 11), Vector(2, 0, 33)) = " .. dot)
 
+print("TESTING ERROR")
+EPlugin.throwError(false, "Soft Error Test")
+
 print("------------")
 
 print("Starting benchmark")

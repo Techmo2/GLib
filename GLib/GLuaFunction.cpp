@@ -36,18 +36,18 @@ inline int ReturnMulti(std::vector<GLuaObject> values, lua_State* state) {
 }
 */
 
-GLuaFunction::GLuaFunction(const char* _name, int(*_execute)(lua_State* state)) {
+GLuaFunction::GLuaFunction(const char* _name, int(*_execute)(lua_State* state), lua_State* _state) {
 	name = _name;
 	execute = _execute;
+	state = _state;
 }
 
 GLuaFunction::~GLuaFunction() {
 
 }
 
-std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams(lua_State* state) {
+std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams() {
 	GarrysMod::Lua::ILuaInterface *interface = reinterpret_cast<GarrysMod::Lua::ILuaInterface*>(state->luabase);
-	//interface->SetState(state);
 
 	int num_params = interface->Top();
 
@@ -58,7 +58,7 @@ std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams(lua_State* stat
 		int idx = 1;
 		for (int t : pfilter) {
 			if (idx > num_params) {
-				printf("GLib: ERR: Numper of filter types defined exceeds number of parameters passed. Skipping parameter check for function %s\n", name);
+				printf("GLib: ERR: Numper of filter types defined exceeds number of parameters passed. Skipping parameter check for function %s.\n", name);
 				break;
 			}
 			interface->CheckType(idx, t);
@@ -78,8 +78,14 @@ std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams(lua_State* stat
 
 	return params;
 }
+
 void GLuaFunction::SetParamFilter(std::vector<int> filter) {
 	pfilter = filter;
+}
+
+void GLuaFunction::ClearStack() {
+	int stack_size = state->luabase->Top();
+	state->luabase->Pop(stack_size);
 }
 
 

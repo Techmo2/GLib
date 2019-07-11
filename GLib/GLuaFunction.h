@@ -50,20 +50,21 @@ inline int ReturnMulti(std::vector<GarrysMod::Lua::ILuaObject*> values, lua_Stat
 
 
 class GLuaFunction {
+private:
+	lua_State* state;
 public:
 	const char* name;
 	int(*execute)(lua_State* state);
 	std::vector<int> pfilter;
-
 	/// <summary>
 	/// Creates a new GLua function with the specified name and parameter types. Calls the provided
 	/// function pointer on execution.
 	/// </summary>
 	///
-	/// <param name="name"> The name of the function to be used within lua. </param>
-	/// <param name="_param_types"> An array of enum values to specify the parameter types the function expects. </param>
-	/// <param name="_execute"> A c function to be called when the function is called within lua </param>
-	GLuaFunction(const char* name, int(*_execute)(lua_State* state));
+	/// <param name="_name"> The name of the function to be used within lua. </param>
+	/// <param name="_execute"> A c function to be called when the function is called within lua. </param>
+	/// <param name="_state"> A pointer to the lua state. </param>
+	GLuaFunction(const char* _name, int(*_execute)(lua_State* state), lua_State* _state);
 
 	~GLuaFunction();
 
@@ -71,9 +72,8 @@ public:
 	/// Automatically retrieves parameters passed to the c function and packs them into a vector.
 	/// </summary>
 	///
-	/// <param name="state"> A pointer to the lua state. </param>
 	/// <returns> A vector of type GLuaObject containing the parameters passed to the c function from lua. </returns>
-	std::vector<GarrysMod::Lua::ILuaObject*> GetParams(lua_State* state);
+	std::vector<GarrysMod::Lua::ILuaObject*> GetParams();
 
 	/// <summary>
 	/// Enable automatic parameter type checking, and set the type filter to the provided vector
@@ -81,6 +81,11 @@ public:
 	///
 	/// <param name="filter"> A vector of type GarrysMod::Lua::Type to be used as a filter. </param>
 	void SetParamFilter(std::vector<int> filter);
+
+	/// <summary>
+	/// A simple utility function that clears the lua stack.
+	/// </summary>
+	void ClearStack();
 };
 
 #endif //LUA_FUNCTION_h

@@ -92,6 +92,26 @@ public:
 	///
 	/// <param name="_func"> The GLuaFunction to be registered. </param>
 	void RegisterGlobal(GLuaFunction _func);
+
+	/// <summary>
+	/// Throws a lua error without halting execution of the current function.
+	/// </summary>
+	///
+	/// <param name="error"> The error message. </param>
+	void ThrowErrorSoft(const char* error);
+
+	/// <summary>
+	/// Throws a lua error and halts execution of the current function.
+	/// </summary>
+	///
+	/// <param name="error"> The error message. </param>
+	void ThrowErrorHard(const char* error);
+
+	/// <summary>
+	/// Returns a pointer to an extended lua interface.
+	/// </summary>
+	/// <returns> Returns a pointer to an extended lua interface. </returns>
+	GarrysMod::Lua::ILuaInterface* GetLuaInterface();
 };
 
 #endif //LUA_PLUGIN_h

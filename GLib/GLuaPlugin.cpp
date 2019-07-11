@@ -1,4 +1,5 @@
 #include "GLuaPlugin.h"
+#include <sstream>
 
 GLuaPlugin::GLuaPlugin(const char* _name, const char* _version, const char* _tname, lua_State* _state){
 	state = _state;
@@ -76,4 +77,27 @@ void GLuaPlugin::Register(GLuaFunction _func) {
 
 void GLuaPlugin::RegisterGlobal(GLuaFunction _func) {
 	r_global_functions.push_back(_func);
+}
+
+void GLuaPlugin::ThrowErrorSoft(const char* error) {
+	GarrysMod::Lua::ILuaInterface* interface = reinterpret_cast<GarrysMod::Lua::ILuaInterface*> (state->luabase);
+
+	interface->ErrorNoHalt("ERR: %s:, %s\n", name, error);
+}
+
+void GLuaPlugin::ThrowErrorHard(const char* error) {
+	GarrysMod::Lua::ILuaInterface* interface = reinterpret_cast<GarrysMod::Lua::ILuaInterface*> (state->luabase);
+	std::ostringstream strstream;
+
+	strstream << "ERR: ";
+	strstream << name;
+	strstream << ": ";
+	strstream << error;
+	strstream << std::endl;
+
+	interface->ThrowError(strstream.str().c_str());
+}
+
+GarrysMod::Lua::ILuaInterface* GLuaPlugin::GetLuaInterface() {
+	return reinterpret_cast<GarrysMod::Lua::ILuaInterface*> (state->luabase);
 }
