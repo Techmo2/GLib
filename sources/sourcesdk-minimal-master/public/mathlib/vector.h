@@ -327,6 +327,7 @@ private:
 //-----------------------------------------------------------------------------
 // Allows us to specifically pass the vector by value when we need to
 //-----------------------------------------------------------------------------
+
 class VectorByValue : public Vector
 {
 public:

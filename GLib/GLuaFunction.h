@@ -4,15 +4,15 @@
 	The function parameters are predefined by a provided vector.
 
 	Author: Techmo
-	Last modified: 4 July 2019
+	Last modified: 8 July 2019
 */
 
 #ifndef LUA_FUNCTION_h
 #define LUA_FUNCTION_h
 
-#include "GLuaObject.h"
-
+#include "GIncludes.h"
 #include <GarrysMod/Lua/Interface.h>
+#include <GarrysMod/Lua/LuaObject.h>
 #include <vector>
 
 /* Return a number */
@@ -40,18 +40,20 @@
 	state->luabase->PushAngle(value); \
 	return 1
 
+/*
 /// <summary> Allows for the return of multiple values from a c function. </summary>
 ///
 /// <param name="values"> An vector of type GLuaObject containing values to be returned. </param>
 /// <param name="state"> A pointer to the current lua state. </param>
-inline int ReturnMulti(std::vector<GLuaObject> values, lua_State* state);
+inline int ReturnMulti(std::vector<GarrysMod::Lua::ILuaObject*> values, lua_State* state);
+*/
 
 
 class GLuaFunction {
 public:
 	const char* name;
 	int(*execute)(lua_State* state);
-	std::vector<char> param_types;
+	std::vector<int> pfilter;
 
 	/// <summary>
 	/// Creates a new GLua function with the specified name and parameter types. Calls the provided
@@ -61,7 +63,8 @@ public:
 	/// <param name="name"> The name of the function to be used within lua. </param>
 	/// <param name="_param_types"> An array of enum values to specify the parameter types the function expects. </param>
 	/// <param name="_execute"> A c function to be called when the function is called within lua </param>
-	GLuaFunction(const char* name, std::vector<char> _param_types, int(*_execute)(lua_State* state));
+	GLuaFunction(const char* name, int(*_execute)(lua_State* state));
+
 	~GLuaFunction();
 
 	/// <summary>
@@ -70,7 +73,14 @@ public:
 	///
 	/// <param name="state"> A pointer to the lua state. </param>
 	/// <returns> A vector of type GLuaObject containing the parameters passed to the c function from lua. </returns>
-	std::vector<GLuaObject> GetParams(lua_State* state);
+	std::vector<GarrysMod::Lua::ILuaObject*> GetParams(lua_State* state);
+
+	/// <summary>
+	/// Enable automatic parameter type checking, and set the type filter to the provided vector
+	/// </summary>
+	///
+	/// <param name="filter"> A vector of type GarrysMod::Lua::Type to be used as a filter. </param>
+	void SetParamFilter(std::vector<int> filter);
 };
 
 #endif //LUA_FUNCTION_h

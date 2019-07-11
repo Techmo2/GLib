@@ -4,13 +4,13 @@
 	A Test script is provided in the project folder.
 
 	Author: Techmo
-	Last Modified: 4 July 2019
+	Last Modified: 11 July 2019
 */
 
 #include "GLuaFunction.h"
-#include "GLuaObject.h"
 #include "GLuaPlugin.h"
 #include "GLuaUtil.h"
+
 
 #define GMOD_MODULE
 
@@ -28,11 +28,11 @@ GLuaPlugin *plugin;
 int f_addNumbers(lua_State* state) {
 
 	// Retrieve function parameters
-	std::vector<GLuaObject> params = addNumbers->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = addNumbers->GetParams(state);
 
 	// Get parameter values
-	double a = params[0].number_value;
-	double b = params[1].number_value;
+	double a = params[0]->GetFloat();
+	double b = params[1]->GetFloat();
 
 	// Calculate sum
 	double sum = a + b;
@@ -45,10 +45,10 @@ int f_addNumbers(lua_State* state) {
 int f_factorial(lua_State* state) {
 
 	// Retrieve function parameters
-	std::vector<GLuaObject> params = factorial->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = factorial->GetParams(state);
 
 	// Get factorial base
-	int n = (int) params[0].number_value;
+	int n = (int) params[0]->GetFloat();
 
 	// Calculate factorial
 	double fact = 1;
@@ -63,16 +63,17 @@ int f_factorial(lua_State* state) {
 
 // More complex function that calculates the dot product of two vectors
 int f_dot(lua_State* state) {
-	std::vector<GLuaObject> params = dot->GetParams(state);
+	std::vector<GarrysMod::Lua::ILuaObject*> params = dot->GetParams(state);
 
-	static Vector a = params[0].vector_value;
-	static Vector b = params[1].vector_value;
+	// Get Vector is currently not functional, instead we cast the pointer to the data given by GetUserData
+	static Vector* a = reinterpret_cast<Vector*> (params[0]->GetUserData());
+	static Vector* b = reinterpret_cast<Vector*> (params[1]->GetUserData());
 
 	static double sum = 0;
 
-	sum += a.x * b.x;
-	sum += a.y * b.y;
-	sum += a.z * b.z;
+	sum += a->x * b->x;
+	sum += a->y * b->y;
+	sum += a->z * b->z;
 
 	ReturnNumber(sum);
 }
@@ -80,16 +81,19 @@ int f_dot(lua_State* state) {
 /* -------- */
 
 GMOD_MODULE_OPEN() {
-
 	// Create plugin "plugin name", "plugin version", "plugin table name"
 	// If functions are not registered using RegisterGlobal(), they will be stored in the plugin table.
 	// This helps to avoid conflicting function names, and keeps things tidy.
-	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA);
+	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA->GetState());
 
 	// Add function, defining the parameter types we expect, and passing a function pointer
-	addNumbers = new GLuaFunction("addNumbers", std::vector<char> {GLua::NUMBER, GLua::NUMBER}, f_addNumbers);
-	factorial = new GLuaFunction("factorial", std::vector<char> {GLua::NUMBER}, f_factorial);
-	dot = new GLuaFunction("dot", std::vector<char> {GLua::VECTOR, GLua::VECTOR}, f_dot);
+	addNumbers = new GLuaFunction("addNumbers", f_addNumbers);
+
+	factorial = new GLuaFunction("factorial", f_factorial);
+
+	dot = new GLuaFunction("dot", f_dot);
+	// Optional, check parameter types automatically
+	dot->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::VECTOR, GarrysMod::Lua::Type::VECTOR});
 
 	// Cache functions with the plugin to be registered on startup.
 	plugin->Register(*addNumbers);

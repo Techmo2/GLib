@@ -8,6 +8,7 @@
 #ifndef LUA_UTIL_h
 #define LUA_UTIL_h
 
+#include "GIncludes.h"
 #include <GarrysMod/Lua/Interface.h>
 
 #include <cstdio>

@@ -4,6 +4,7 @@
 	Author: Techmo
 	Last modified: 4 July 2019
 */
+#include "GIncludes.h"
 
 #ifndef LUA_TYPE_h
 #define LUA_TYPE_h
