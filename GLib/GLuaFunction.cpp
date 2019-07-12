@@ -36,10 +36,9 @@ inline int ReturnMulti(std::vector<GLuaObject> values, lua_State* state) {
 }
 */
 
-GLuaFunction::GLuaFunction(const char* _name, int(*_execute)(lua_State* state), lua_State* _state) {
+GLuaFunction::GLuaFunction(const char* _name, int(*_execute)(lua_State* state)) {
 	name = _name;
 	execute = _execute;
-	state = _state;
 }
 
 GLuaFunction::~GLuaFunction() {
@@ -86,6 +85,10 @@ void GLuaFunction::SetParamFilter(std::vector<int> filter) {
 void GLuaFunction::ClearStack() {
 	int stack_size = state->luabase->Top();
 	state->luabase->Pop(stack_size);
+}
+
+void GLuaFunction::SetState(lua_State* _state) {
+	state = _state;
 }
 
 

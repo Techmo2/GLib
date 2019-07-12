@@ -118,10 +118,10 @@ GMOD_MODULE_OPEN() {
 	plugin = new GLuaPlugin("ExamplePlugin", "1.0.0", "EPlugin", LUA->GetState());
 
 	// Add function, defining the parameter types we expect, and passing a function pointer
-	addNumbers = new GLuaFunction("addNumbers", f_addNumbers, LUA->GetState());
-	factorial = new GLuaFunction("factorial", f_factorial, LUA->GetState());
-	throwError = new GLuaFunction("throwError", f_throwError, LUA->GetState());
-	dot = new GLuaFunction("dot", f_dot, LUA->GetState());
+	addNumbers = new GLuaFunction("addNumbers", f_addNumbers);
+	factorial = new GLuaFunction("factorial", f_factorial);
+	throwError = new GLuaFunction("throwError", f_throwError);
+	dot = new GLuaFunction("dot", f_dot);
 
 	// Optional, check parameter types automatically.
 	// Has a minor effect on execution time, about equivalent to the increase in execution time added by checking the types manually.
@@ -130,10 +130,10 @@ GMOD_MODULE_OPEN() {
 	//throwError->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::BOOL, GarrysMod::Lua::Type::STRING});
 
 	// Cache functions with the plugin to be registered on startup.
-	plugin->Register(*addNumbers);
-	plugin->Register(*factorial);
-	plugin->Register(*dot);
-	plugin->Register(*throwError);
+	plugin->Register(addNumbers);
+	plugin->Register(factorial);
+	plugin->Register(dot);
+	plugin->Register(throwError);
 	
 	// Start plugin and perform setup
 	plugin->Start();

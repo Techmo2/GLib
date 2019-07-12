@@ -48,9 +48,9 @@ void GLuaPlugin::Start() {
 	
 	LUA->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
 
-	for (GLuaFunction func : r_global_functions) {
-		LUA->PushCFunction(func.execute);
-		LUA->SetField(-2, func.name);
+	for (GLuaFunction* func : r_global_functions) {
+		LUA->PushCFunction(func->execute);
+		LUA->SetField(-2, func->name);
 	}
 
 	LUA->Pop();
@@ -63,20 +63,22 @@ void GLuaPlugin::Start() {
 	LUA->PushNumber(0);
 	LUA->SetField(-2, "VersionNum");
 
-	for (GLuaFunction func : r_functions) {
-		LUA->PushCFunction(func.execute);
-		LUA->SetField(-2, func.name);
+	for (GLuaFunction* func : r_functions) {
+		LUA->PushCFunction(func->execute);
+		LUA->SetField(-2, func->name);
 	}
 
 	LUA->SetField(GarrysMod::Lua::INDEX_GLOBAL, tname);
 }
 
-void GLuaPlugin::Register(GLuaFunction _func) {
+void GLuaPlugin::Register(GLuaFunction* _func) {
 	r_functions.push_back(_func);
+	r_functions[r_functions.size() - 1]->SetState(state);
 }
 
-void GLuaPlugin::RegisterGlobal(GLuaFunction _func) {
+void GLuaPlugin::RegisterGlobal(GLuaFunction* _func) {
 	r_global_functions.push_back(_func);
+	r_global_functions[r_global_functions.size() - 1]->SetState(state);
 }
 
 void GLuaPlugin::ThrowErrorSoft(const char* error) {

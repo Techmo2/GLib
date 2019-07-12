@@ -64,7 +64,7 @@ public:
 	/// <param name="_name"> The name of the function to be used within lua. </param>
 	/// <param name="_execute"> A c function to be called when the function is called within lua. </param>
 	/// <param name="_state"> A pointer to the lua state. </param>
-	GLuaFunction(const char* _name, int(*_execute)(lua_State* state), lua_State* _state);
+	GLuaFunction(const char* _name, int(*_execute)(lua_State* state));
 
 	~GLuaFunction();
 
@@ -86,6 +86,11 @@ public:
 	/// A simple utility function that clears the lua stack.
 	/// </summary>
 	void ClearStack();
+
+	/// <summary>
+	/// Sets the lua state pointer for the function to use. Automatically done by the plugin class on start.
+	/// </summary>
+	void SetState(lua_State* _state);
 };
 
 #endif //LUA_FUNCTION_h

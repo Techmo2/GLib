@@ -59,8 +59,8 @@ private:
 	lua_State* state;
 	//IVEngineServer *engine = NULL;
 	//IServer *server = NULL;
-	std::vector<GLuaFunction> r_functions;
-	std::vector<GLuaFunction> r_global_functions;
+	std::vector<GLuaFunction*> r_functions;
+	std::vector<GLuaFunction*> r_global_functions;
 public:
 
 	/// <summary>
@@ -84,14 +84,14 @@ public:
 	/// </summary>
 	///
 	/// <param name="_func"> The GLuaFunction to be registered. </param>
-	void Register(GLuaFunction _func);
+	void Register(GLuaFunction* _func);
 
 	/// <summary>
 	/// Caches a GLuaFunction to be registered in the global table when the plugin starts.
 	/// </summary>
 	///
 	/// <param name="_func"> The GLuaFunction to be registered. </param>
-	void RegisterGlobal(GLuaFunction _func);
+	void RegisterGlobal(GLuaFunction* _func);
 
 	/// <summary>
 	/// Throws a lua error without halting execution of the current function.
