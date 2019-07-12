@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>..\sources\sourcesdk-minimal\common;..\sources\sourcesdk-minimal\public;..\sources\sourcesdk-minimal\game\server;..\sources\sourcesdk-minimal\game\shared;..\sources\sourcesdk-minimal\public\tier0;..\sources\sourcesdk-minimal\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>gmsv_testing_win32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -78,7 +78,7 @@
     <TargetName>gmsv_test</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>..\sources\sourcesdk-minimal\common;..\sources\sourcesdk-minimal\public;..\sources\sourcesdk-minimal\game\server;..\sources\sourcesdk-minimal\game\shared;..\sources\sourcesdk-minimal\public\tier0;..\sources\sourcesdk-minimal\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>gmsv_testing_win32</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -93,7 +93,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalLibraryDirectories>..\sources\sourcesdk-minimal-master\lib\public;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\sources\sourcesdk-minimal\lib\public;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tier0.lib;vstdlib.lib;ws2_32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -126,7 +126,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\sources\sourcesdk-minimal-master\lib\public;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\sources\sourcesdk-minimal\lib\public;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>tier0.lib;vstdlib.lib;ws2_32.lib;rpcrt4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
