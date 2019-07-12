@@ -1,0 +1,12 @@
+[submodule "sources/sourcesdk-minimal"]
+	path = sources/sourcesdk-minimal
+	url = https://github.com/danielga/sourcesdk-minimal.git
+[submodule "sources/--recursive"]
+	path = sources/--recursive
+	url = https://github.com/danielga/garrysmod_common.git
+[submodule "sources/--force"]
+	path = sources/--force
+	url = https://github.com/danielga/garrysmod_common.git
+[submodule "sources/garrysmod_common"]
+	path = sources/garrysmod_common
+	url = https://github.com/danielga/garrysmod_common.git
