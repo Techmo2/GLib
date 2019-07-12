@@ -7,6 +7,21 @@
 	Last Modified: 11 July 2019
 */
 
+/* READ ME BEFORE STARTING */
+/* Avoid using the following methods until I can write a patch for the garrysmod_common library:
+
+
+	ILuaObject->GetDouble(); 
+	Just use GetFloat() instead.
+
+	ILuaObject->GetBool();
+	Just use GetInt() and cast to (bool).
+
+	ILuaObject->GetVector();
+	Just use GetUserData() and cast to (Vector*)
+
+*/
+
 #include "GLuaFunction.h"
 #include "GLuaPlugin.h"
 #include "GLuaUtil.h"
