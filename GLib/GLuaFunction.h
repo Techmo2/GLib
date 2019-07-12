@@ -76,6 +76,16 @@ public:
 	std::vector<GarrysMod::Lua::ILuaObject*> GetParams();
 
 	/// <summary>
+	/// Automatically retrieves parameters passed to the c function and packs them into a vector.
+	/// Optimizes the process by preallocating the buffer to the specified size.
+	/// </summary>
+	///
+	/// <param name="_palloc"> The number of slots to preallocate in the buffer. </param>
+	///
+	/// <returns> A vector of type GLuaObject containing the parameters passed to the c function from lua. </returns>
+	std::vector<GarrysMod::Lua::ILuaObject*> GetParams(int _palloc);
+
+	/// <summary>
 	/// Enable automatic parameter type checking, and set the type filter to the provided vector
 	/// </summary>
 	///

@@ -77,7 +77,8 @@ int f_factorial(lua_State* state) {
 
 // More complex function that calculates the dot product of two vectors
 int f_dot(lua_State* state) {
-	std::vector<GarrysMod::Lua::ILuaObject*> params = dot->GetParams();
+	// Specify the size of the buffer to be preallocated. Can still accept a variable number of arguments, will just be slower.
+	std::vector<GarrysMod::Lua::ILuaObject*> params = dot->GetParams(2);
 
 	// Get Vector is currently not functional, instead we cast the pointer to the data given by GetUserData
 	static Vector* a = reinterpret_cast<Vector*> (params[0]->GetUserData());
