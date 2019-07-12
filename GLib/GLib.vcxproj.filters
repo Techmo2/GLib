@@ -30,10 +30,10 @@
     <ClCompile Include="LuaObjectBase.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sources\garrysmod_common-master\source\ABICompatibility.cpp">
+    <ClCompile Include="..\sources\garrysmod_common\source\ABICompatibility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sources\garrysmod_common-master\source\LuaShared.cpp">
+    <ClCompile Include="..\sources\garrysmod_common\source\LuaShared.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

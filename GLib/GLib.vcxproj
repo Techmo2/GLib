@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common-master\include\scanning;..\sources\garrysmod_common-master\include\detouring;..\sources\garrysmod_common-master\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>gmsv_testing_win32</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -78,7 +78,7 @@
     <TargetName>gmsv_test</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common-master\include\scanning;..\sources\garrysmod_common-master\include\detouring;..\sources\garrysmod_common-master\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>..\sources\sourcesdk-minimal-master\common;..\sources\sourcesdk-minimal-master\public;..\sources\sourcesdk-minimal-master\game\server;..\sources\sourcesdk-minimal-master\game\shared;..\sources\sourcesdk-minimal-master\public\tier0;..\sources\sourcesdk-minimal-master\public\tier1;..\sources\garrysmod_common\include\scanning;..\sources\garrysmod_common\include\detouring;..\sources\garrysmod_common\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetName>gmsv_testing_win32</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -146,8 +146,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\sources\garrysmod_common-master\source\ABICompatibility.cpp" />
-    <ClCompile Include="..\sources\garrysmod_common-master\source\LuaShared.cpp" />
+    <ClCompile Include="..\sources\garrysmod_common\source\ABICompatibility.cpp" />
+    <ClCompile Include="..\sources\garrysmod_common\source\LuaShared.cpp" />
     <ClCompile Include="example.cpp" />
     <ClCompile Include="GLuaFunction.cpp" />
     <ClCompile Include="GLuaPlugin.cpp" />
