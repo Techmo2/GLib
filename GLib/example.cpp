@@ -127,7 +127,9 @@ GMOD_MODULE_OPEN() {
 	// Has a minor effect on execution time, about equivalent to the increase in execution time added by checking the types manually.
 	// Still pretty damn fast.
 	dot->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::VECTOR, GarrysMod::Lua::Type::VECTOR});
-	//throwError->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::BOOL, GarrysMod::Lua::Type::STRING});
+
+	// 
+	throwError->SetParamFilter(std::vector<int> {GarrysMod::Lua::Type::BOOL, GarrysMod::Lua::Type::STRING});
 
 	// Cache functions with the plugin to be registered on startup.
 	plugin->Register(addNumbers);

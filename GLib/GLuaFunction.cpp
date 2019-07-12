@@ -52,6 +52,9 @@ std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams() {
 
 	std::vector<GarrysMod::Lua::ILuaObject*> params;
 
+	// Get parameter lua objects
+	interface->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
+
 	// Check parameter types if enabled
 	if (pfilter.size() > 0) {
 		int idx = 1;
@@ -61,11 +64,9 @@ std::vector<GarrysMod::Lua::ILuaObject*> GLuaFunction::GetParams() {
 				break;
 			}
 			interface->CheckType(idx, t);
+			idx++;
 		}
 	}
-
-	// Get parameter lua objects
-	interface->PushSpecial(GarrysMod::Lua::SPECIAL_GLOB);
 
 	for (int stack_idx = 1; stack_idx <= num_params; stack_idx++) {
 		GarrysMod::Lua::ILuaObject* o;
